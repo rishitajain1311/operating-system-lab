@@ -1,0 +1,58 @@
+///LJF with zero arrival time
+#include <iostream>
+#include<vector>
+#include<algorithm>
+
+using namespace std;
+
+struct job{
+        int id;
+        int burst_time;
+    };
+    
+bool comparejobs(job&a , job&b){
+    return a.burst_time > b.burst_time ;
+}
+
+class ljfscheduler {
+    private:
+    vector<job>joblist;
+    public:
+    ljfscheduler(vector<job>&jobs)
+    {
+        joblist = jobs;
+    }
+
+
+void schedule(){
+    
+    sort(joblist.begin(),joblist.end() , comparejobs);
+    int current_time =0 ;
+    cout<<"job schedule(ljf) : \n";
+    cout<<"job id \t burst time \t completion time \n" ;
+    
+     for( job & job : joblist ){
+        int completion_time = current_time + job.burst_time ;
+        cout<<job.id<<"\t"<<job.burst_time<<"\t\t"<<completion_time<<endl ;
+    
+        
+        current_time = completion_time;
+        
+    }
+}
+};
+
+int main()
+{
+    vector<job>jobs ={
+        {1,10} ,{2,5} , {3,8}
+     };
+     
+     ljfscheduler scheduler(jobs);
+     
+     scheduler.schedule();
+    
+   
+ 
+    return 0;
+}
